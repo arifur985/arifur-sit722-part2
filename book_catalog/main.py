@@ -6,6 +6,7 @@ from models import Book, Base
 from schemas import BookBase, BookCreate, BookInDB, BookUpdate
 from db import engine, get_db
 
+# Create database tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -53,3 +54,8 @@ def delete_book(book_id: int, db: Session = Depends(get_db)):
     db.delete(db_book)
     db.commit()
     return db_book
+
+# Entry point for running the FastAPI app with Uvicorn
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=3000)
